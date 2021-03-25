@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+
+		<style>
+			.container {
+				width: 400px;
+			}
+			.button {
+				display: inline-block;
+			}
+			.result {
+				margin-top: 32px;
+			}
+		</style>
+
+		<script>
+			// function captureVideoFrame(video, format, quality) {
+			// 	if (typeof video === "string") {
+			// 		console.log('oook')
+			// 		video = document.getElementById(video);
+			// 	}
+
+			// 	format = format || "jpeg";
+			// 	quality = quality || 0.92;
+
+			// 	if (!video || (format !== "png" && format !== "jpeg")) {
+			// 		console.log('here', video , format)
+			// 		return false;
+			// 	}
+
+			// 	var canvas = document.createElement("CANVAS");
+
+			// 	canvas.width = video.videoWidth;
+			// 	canvas.height = video.videoHeight;
+
+			// 	canvas.getContext("2d").drawImage(video, 0, 0);
+
+			// 	var dataUri = canvas.toDataURL("image/" + format, quality);
+			// 	var data = dataUri.split(",")[1];
+			// 	var mimeType = dataUri.split(";")[0].slice(5);
+
+			// 	var bytes = window.atob(data);
+			// 	var buf = new ArrayBuffer(bytes.length);
+			// 	var arr = new Uint8Array(buf);
+
+			// 	for (var i = 0; i < bytes.length; i++) {
+			// 		arr[i] = bytes.charCodeAt(i);
+			// 	}
+
+			// 	var blob = new Blob([arr], { type: mimeType });
+			// 	return { blob: blob, dataUri: dataUri, format: format };
+			// }
+
+			function save() {
+				const canvas = document.getElementById("canvas");
+				const video = document.getElementById("video");
+				const time = document.getElementById("time");
+				const ctx = canvas.getContext("2d");
+				canvas.width = video.videoWidth;
+				canvas.height = video.videoHeight;
+
+				// video.crossOrigin = "*"
+
+				time.innerHTML = "image taken at " + video.currentTime;
+
+				ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+				// canvas.toBlob(saveFrame, "image/jpeg");
+				console.log(canvas.toDataURL());
+			}
+
+			function saveFrame(blob) {
+				// const img = new Image();
+				// img.src = window.URL.createObjectUrl(blob);
+			}
+
+			// function extract() {
+			// 	const frame = captureVideoFrame("my-video", "png");
+			// 	console.log(frame);
+			// }
+		</script>
+	</head>
+	<body>
+		<!-- <video id="my-video" autoplay>
+			<source
+				src="https://gain-user-videos.s3.amazonaws.com/0cff55ef-0f8e-4528-9d99-33f4c35c3683/assets/videos/sd.mp4"
+				type="video/mp4"
+			/>
+		</video>
+
+		<img id="my-screenshot" />
+		<button onclick="extract()" class="button">Save local</button> -->
+
+		<div class="container">
+			<video id="video" controls width="100%">
+				<source
+					src="https://gain-user-videos.s3.amazonaws.com/73715356-2765-4845-870a-216da9c35bb6/assets/videos/sd.mp4"
+					type="video/mp4"
+				/>
+			</video>
+			<button onclick="save()" class="button">Save local</button>
+			<!-- <button onclick="save()" class="button">Save cloudinary</button> -->
+
+			<div class="result">
+				<canvas id="canvas" style="overflow: auto"></canvas>
+				<div id="time"></div>
+			</div>
+		</div>
+		<script>
+			// Show the image
+			// const img = document.getElementById("my-screenshot");
+			// img.setAttribute("src", frame.dataUri);
+		</script>
+	</body>
+</html>

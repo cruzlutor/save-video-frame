@@ -8,13 +8,18 @@
 
     <style>
       .container {
-        width: 400px;
+        width: 800px;
       }
       .button {
         display: inline-block;
       }
       .result {
         margin-top: 32px;
+        display: flex;
+        justify-content: space-between;
+      }
+      .result-item {
+        width: 48%;
       }
     </style>
 
@@ -23,29 +28,49 @@
         const canvas = document.getElementById("canvas");
         const video = document.getElementById("video");
         const time = document.getElementById("time");
-        const img = document.getElementById("image");
+        const local = document.getElementById("local");
+        const cloudinary = document.getElementById("cloudinary");
         const ctx = canvas.getContext("2d");
+
+        const cloudinaryFrame =
+          "https://optimized.gainapp.com/video/upload/so_" +
+          video.currentTime +
+          ",f_jpg/gain_videos/fe1c864f-cda7-4424-9c67-bb7521f8274a/assets/videos/sd.mp4";
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         time.innerHTML = "image taken at " + video.currentTime;
+        cloudinary.src = cloudinaryFrame;
         ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
-        img.src = canvas.toDataURL();
+        local.src = canvas.toDataURL();
       }
     </script>
   </head>
   <body>
     <div class="container">
       <h3>Video</h3>
-      <video id="video" controls width="100%" crossorigin="anonymous">
-				<source src="/video.mp4" type="video/mp4" />
+      <video id="video" controls width="100%">
+        <source
+          src="https://gain-user-videos.s3.amazonaws.com/fe1c864f-cda7-4424-9c67-bb7521f8274a/assets/videos/sd.mp4"
+          type="video/mp4"
+        />
       </video>
-      <button onclick="save()" class="button">Save local</button>
+      <button onclick="save()" class="button">Save frame</button>
+      <div style="margin-top: 16px" id="time"></div>
       <div class="result">
-        <h3>Canvas</h3>
-        <canvas id="canvas" style="overflow: auto"></canvas>
-        <div id="time"></div>
-        <h3>Image</h3>
-        <img id="image" />
+        <div class="result-item">
+          <h3>Local Image</h3>
+          <canvas id="canvas" style="width: 100%" width="100%"></canvas>
+        </div>
+
+        <!-- <div class="result-item">
+          <h3>Local Image</h3>
+          <img id="local" width="100%" />
+        </div> -->
+
+        <div class="result-item">
+          <h3>Cloudinary Image</h3>
+          <img id="cloudinary" width="100%" />
+        </div>
       </div>
     </div>
   </body>
